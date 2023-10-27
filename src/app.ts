@@ -34,7 +34,8 @@ app.get("/", async (request, reply) => {
 
 
 app.listen({
-  port: parseInt(process.env.PORT || "5000")
+  port: parseInt(process.env.PORT || "5000"),
+  host: "0.0.0.0"
 }, async(err, address) => {
   if (err) {
     console.error(err);
