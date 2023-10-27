@@ -13,7 +13,8 @@ export default async (fastify: FastifyInstance) => {
         let list = "";
         for (const proxy of response) {
           if (proxy.type === "proxyxoay") {
-            list += `${AUTH_PROXYXOAY}@${proxy.destination}\n`;
+            // list += `${AUTH_PROXYXOAY}@${proxy.destination}\n`;
+            list += `${proxy.destination}:${AUTH_PROXYXOAY}\n`;
           } else {
             list += `${SITE_URL}:${proxy.port}\n`;
           }
