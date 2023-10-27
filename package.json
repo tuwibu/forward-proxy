@@ -1,0 +1,37 @@
+{
+  "dependencies": {
+    "@fastify/autoload": "^5.8.0",
+    "@prisma/client": "^5.5.2",
+    "@sinclair/typebox": "^0.31.20",
+    "axios": "^1.5.1",
+    "colorette": "^2.0.20",
+    "dayjs": "^1.11.10",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.24.3",
+    "fastify-autoload": "^3.13.0",
+    "fastify-plugin": "^4.5.1",
+    "node-cron": "^3.0.2",
+    "prisma": "^5.5.2",
+    "proxy-chain": "^2.3.0"
+  },
+  "name": "forward-proxy",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/node": "^20.8.9",
+    "@types/node-cron": "^3.0.10",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "start": "node dist/app.js",
+    "build": "tsc",
+    "dev": "nodemon src/app.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev --name init",
+    "prisma:studio": "prisma studio",
+    "pkg": "yarn build && pkg . -t node18-linux-x64"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
