@@ -11,7 +11,11 @@ export default async (fastify: FastifyInstance) => {
         const response = await fastify.prisma.proxy.findMany({});
         let list = "";
         for (const proxy of response) {
-          list += `${SITE_URL}:${proxy.port}\n`;
+          if (proxy.type === "proxyxoay") {
+            list += `${proxy.destination}\n`;
+          } else {
+            list += `${SITE_URL}:${proxy.port}\n`;
+          }
         }
         reply.header("Content-Type", "text/plain");
         reply.send(list);
