@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
 
 const SITE_URL = process.env.SITE_URL;
+const AUTH_PROXYXOAY = process.env.AUTH_PROXYXOAY;
 
 export default async (fastify: FastifyInstance) => {
   fastify.route({
@@ -12,7 +13,7 @@ export default async (fastify: FastifyInstance) => {
         let list = "";
         for (const proxy of response) {
           if (proxy.type === "proxyxoay") {
-            list += `${proxy.destination}\n`;
+            list += `${AUTH_PROXYXOAY}@${proxy.destination}\n`;
           } else {
             list += `${SITE_URL}:${proxy.port}\n`;
           }
