@@ -4,12 +4,17 @@ import { ChangeProxyXoay } from "./services/proxyxoay";
 import { ChangeTinsoftProxy } from "./services/tinsoftproxy";
 import { ChangeTmProxy } from "./services/tmproxy";
 import logger from "./helpers/logger";
+import dotenv from "dotenv";
+dotenv.config();
+
+const RESET_PROXY_INTERVAL = process.env.RESET_PROXY_INTERVAL || 60000;
+
 export const ResetProxy = async (prisma: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>) => {
   try {
     const lists = await prisma.proxy.findMany({
       where: {
         updatedAt: {
-          lt: new Date(Date.now() - 120000)
+          lt: new Date(Date.now() - Number(RESET_PROXY_INTERVAL))
         }
       }
     });

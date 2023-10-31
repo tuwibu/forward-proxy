@@ -44,7 +44,8 @@ app.get("/", (request, reply) => __awaiter(void 0, void 0, void 0, function* () 
     });
 }));
 app.listen({
-    port: parseInt(process.env.PORT || "5000")
+    port: parseInt(process.env.PORT || "5000"),
+    host: "0.0.0.0"
 }, (err, address) => __awaiter(void 0, void 0, void 0, function* () {
     if (err) {
         console.error(err);

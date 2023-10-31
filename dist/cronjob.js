@@ -17,12 +17,15 @@ const proxyxoay_1 = require("./services/proxyxoay");
 const tinsoftproxy_1 = require("./services/tinsoftproxy");
 const tmproxy_1 = require("./services/tmproxy");
 const logger_1 = __importDefault(require("./helpers/logger"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+const RESET_PROXY_INTERVAL = process.env.RESET_PROXY_INTERVAL || 60000;
 const ResetProxy = (prisma) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const lists = yield prisma.proxy.findMany({
             where: {
                 updatedAt: {
-                    lt: new Date(Date.now() - 120000)
+                    lt: new Date(Date.now() - Number(RESET_PROXY_INTERVAL))
                 }
             }
         });

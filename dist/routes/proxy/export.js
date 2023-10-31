@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const SITE_URL = process.env.SITE_URL;
+const AUTH_PROXYXOAY = process.env.AUTH_PROXYXOAY;
 exports.default = (fastify) => __awaiter(void 0, void 0, void 0, function* () {
     fastify.route({
         method: "GET",
@@ -19,7 +20,13 @@ exports.default = (fastify) => __awaiter(void 0, void 0, void 0, function* () {
                 const response = yield fastify.prisma.proxy.findMany({});
                 let list = "";
                 for (const proxy of response) {
-                    list += `${SITE_URL}:${proxy.port}\n`;
+                    if (proxy.type === "proxyxoay") {
+                        // list += `${AUTH_PROXYXOAY}@${proxy.destination}\n`;
+                        list += `${proxy.destination}:${AUTH_PROXYXOAY}\n`;
+                    }
+                    else {
+                        list += `${SITE_URL}:${proxy.port}\n`;
+                    }
                 }
                 reply.header("Content-Type", "text/plain");
                 reply.send(list);
