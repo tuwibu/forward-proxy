@@ -6,7 +6,11 @@ export default async (fastify: FastifyInstance) => {
     url: "/",
     handler: async (request, reply) => {
       try {
-        const response = await fastify.prisma.proxy.findMany({});
+        const response = await fastify.prisma.proxy.findMany({
+          orderBy: {
+            createdAt: "asc"
+          }
+        });
         reply.send({
           success: true,
           data: response
