@@ -9,6 +9,8 @@ import cluster from "./cluster";
 
 dotenv.config();
 
+const CRONTAB = process.env.CRONTAB || "* * * * *";
+
 const app = fastify({
   logger: {
     level: "info"
@@ -49,7 +51,7 @@ app.listen({
     });
   });
   console.log(`Server listening at ${address}`);
-  cron.schedule("* * * * *", async () => {
+  cron.schedule(CRONTAB, async () => {
     await ResetProxy(app.prisma);
   });
 });
