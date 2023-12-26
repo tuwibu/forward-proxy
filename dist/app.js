@@ -21,6 +21,7 @@ const prisma_1 = __importDefault(require("./plugins/prisma"));
 const cronjob_1 = require("./cronjob");
 const cluster_1 = __importDefault(require("./cluster"));
 dotenv_1.default.config();
+const CRONTAB = process.env.CRONTAB || "* * * * *";
 const app = (0, fastify_1.default)({
     logger: {
         level: "info"
@@ -59,7 +60,7 @@ app.listen({
         });
     });
     console.log(`Server listening at ${address}`);
-    node_cron_1.default.schedule("* * * * *", () => __awaiter(void 0, void 0, void 0, function* () {
+    node_cron_1.default.schedule(CRONTAB, () => __awaiter(void 0, void 0, void 0, function* () {
         yield (0, cronjob_1.ResetProxy)(app.prisma);
     }));
 }));

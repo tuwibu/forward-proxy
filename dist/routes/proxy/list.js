@@ -15,7 +15,11 @@ exports.default = (fastify) => __awaiter(void 0, void 0, void 0, function* () {
         url: "/",
         handler: (request, reply) => __awaiter(void 0, void 0, void 0, function* () {
             try {
-                const response = yield fastify.prisma.proxy.findMany({});
+                const response = yield fastify.prisma.proxy.findMany({
+                    orderBy: {
+                        createdAt: "asc"
+                    }
+                });
                 reply.send({
                     success: true,
                     data: response
