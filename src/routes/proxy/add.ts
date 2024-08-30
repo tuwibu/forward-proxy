@@ -7,6 +7,7 @@ enum ProxyType {
   tinsoftproxy = 'tinsoftproxy',
   tmproxy = 'tmproxy',
   proxyxoay = 'proxyxoay',
+  netproxy = 'netproxy',
 }
 
 const BodySchema = Type.Object({

@@ -5,6 +5,7 @@ import { ChangeTinsoftProxy } from './services/tinsoftproxy'
 import { ChangeTmProxy } from './services/tmproxy'
 import logger from './helpers/logger'
 import dotenv from 'dotenv'
+import { ChangeNetProxy } from './services/netproxy'
 dotenv.config()
 
 const RESET_PROXY_INTERVAL = process.env.RESET_PROXY_INTERVAL || 60000
@@ -35,6 +36,16 @@ export const ResetProxy = async (prisma: PrismaClient<Prisma.PrismaClientOptions
           })
         } else if (proxy.type === 'tmproxy') {
           const destination = await ChangeTmProxy(proxy.apiKey)
+          await prisma.proxy.update({
+            where: {
+              apiKey: proxy.apiKey,
+            },
+            data: {
+              destination,
+            },
+          })
+        } else if (proxy.type === 'netproxy') {
+          const destination = await ChangeNetProxy(proxy.apiKey)
           await prisma.proxy.update({
             where: {
               apiKey: proxy.apiKey,
