@@ -1,54 +1,52 @@
-import { Prisma, PrismaClient } from "@prisma/client";
-import { DefaultArgs } from "@prisma/client/runtime/library";
-import { ChangeProxyXoay } from "./services/proxyxoay";
-import { ChangeTinsoftProxy } from "./services/tinsoftproxy";
-import { ChangeTmProxy } from "./services/tmproxy";
-import logger from "./helpers/logger";
-import dotenv from "dotenv";
-dotenv.config();
+import { Prisma, PrismaClient } from '@prisma/client'
+import { DefaultArgs } from '@prisma/client/runtime/library'
+import { ChangeProxyXoay } from './services/proxyxoay'
+import { ChangeTinsoftProxy } from './services/tinsoftproxy'
+import { ChangeTmProxy } from './services/tmproxy'
+import logger from './helpers/logger'
+import dotenv from 'dotenv'
+dotenv.config()
 
-const RESET_PROXY_INTERVAL = process.env.RESET_PROXY_INTERVAL || 60000;
+const RESET_PROXY_INTERVAL = process.env.RESET_PROXY_INTERVAL || 60000
 
 export const ResetProxy = async (prisma: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>) => {
   try {
     const lists = await prisma.proxy.findMany({
       where: {
         updatedAt: {
-          lt: new Date(Date.now() - Number(RESET_PROXY_INTERVAL))
-        }
-      }
-    });
-    for(const proxy of lists) {
+          lt: new Date(Date.now() - Number(RESET_PROXY_INTERVAL)),
+        },
+      },
+    })
+    for (const proxy of lists) {
       try {
-        logger.info(`Reset proxy ${proxy.apiKey} (${proxy.type})`);
-        if (proxy.type === "proxyxoay") {
-          await ChangeProxyXoay(proxy.apiKey);
-        } else if (proxy.type === "tinsoftproxy") {
-          const destination = await ChangeTinsoftProxy(proxy.apiKey);
+        logger.info(`Reset proxy ${proxy.apiKey} (${proxy.type})`)
+        if (proxy.type === 'proxyxoay') {
+          await ChangeProxyXoay(proxy.apiKey)
+        } else if (proxy.type === 'tinsoftproxy') {
+          const destination = await ChangeTinsoftProxy(proxy.apiKey)
           await prisma.proxy.update({
             where: {
-              apiKey: proxy.apiKey
+              apiKey: proxy.apiKey,
             },
             data: {
-              destination
-            }
-          });
-        } else if (proxy.type === "tmproxy") {
-          const destination = await ChangeTmProxy(proxy.apiKey);
+              destination,
+            },
+          })
+        } else if (proxy.type === 'tmproxy') {
+          const destination = await ChangeTmProxy(proxy.apiKey)
           await prisma.proxy.update({
             where: {
-              apiKey: proxy.apiKey
+              apiKey: proxy.apiKey,
             },
             data: {
-              destination
-            }
-          });
+              destination,
+            },
+          })
         }
-      } catch(ex) {
-
-      }
+      } catch (ex) {}
     }
-  } catch(ex) {
-    throw ex;
+  } catch (ex) {
+    throw ex
   }
 }

@@ -1,11 +1,11 @@
-import fastifyPlugin from "fastify-plugin";
-import { PrismaClient } from "@prisma/client";
+import fastifyPlugin from 'fastify-plugin'
+import { PrismaClient } from '@prisma/client'
 
 export default fastifyPlugin(async (server, options) => {
   const prisma = new PrismaClient({
     // log: ["query", "info", "warn", "error"]
-  });
-  await prisma.$connect();
+  })
+  await prisma.$connect()
 
-  server.decorate("prisma", prisma);
-});
+  server.decorate('prisma', prisma)
+})

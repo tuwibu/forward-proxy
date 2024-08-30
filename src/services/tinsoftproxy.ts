@@ -1,17 +1,17 @@
-import axios from "axios";
+import axios from 'axios'
 
 export const ChangeTinsoftProxy = async (apiKey: string): Promise<string> => {
   try {
     const response = await axios({
-      method: "GET",
-      url: `http://proxy.tinsoftsv.com/api/changeProxy.php?key=${apiKey}`
-    });
+      method: 'GET',
+      url: `http://proxy.tinsoftsv.com/api/changeProxy.php?key=${apiKey}`,
+    })
     if (response.data.success) {
-      return response.data.proxy;
+      return response.data.proxy
     } else {
-      throw new Error(response.data.description);
+      throw new Error(response.data.description)
     }
-  } catch(ex) {
-    throw ex;
+  } catch (ex) {
+    throw ex
   }
 }

@@ -1,23 +1,23 @@
-import { FastifyInstance } from "fastify";
+import { FastifyInstance } from 'fastify'
 
 export default async (fastify: FastifyInstance) => {
   fastify.route({
-    method: "GET",
-    url: "/",
+    method: 'GET',
+    url: '/',
     handler: async (request, reply) => {
       try {
         const response = await fastify.prisma.proxy.findMany({
           orderBy: {
-            createdAt: "asc"
-          }
-        });
+            createdAt: 'asc',
+          },
+        })
         reply.send({
           success: true,
-          data: response
-        });
+          data: response,
+        })
       } catch (ex) {
-        throw ex;
+        throw ex
       }
-    }
-  });
+    },
+  })
 }
