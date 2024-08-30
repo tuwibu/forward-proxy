@@ -14,7 +14,11 @@ export const ChangeNetProxy = async (apiKey: string) => {
         country: COUNTRY,
       },
     })
-    return response.data
+    if (response.data.success) {
+      return response.data.data.proxy
+    } else {
+      throw new Error(response.data.message)
+    }
   } catch (ex) {
     throw ex
   }
