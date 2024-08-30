@@ -4,7 +4,18 @@ dotenv.config()
 
 const COUNTRY = process.env.COUNTRY || ''
 
-export const ChangeNetProxy = async (apiKey: string) => {
+// {
+//   "success": true,
+//   "data": {
+//       "proxy": "104.214.186.198:47361",
+//       "refreshAt": "2024-08-30T13:47:19.818Z",
+//       "nextChange": 120,
+//       "acceptIp": "171.252.154.194",
+//       "isResidential": true
+//   }
+// }
+
+export const ChangeNetProxy = async (apiKey: string): Promise<string> => {
   try {
     const response = await axios({
       method: 'GET',
@@ -14,7 +25,7 @@ export const ChangeNetProxy = async (apiKey: string) => {
         country: COUNTRY,
       },
     })
-    if (response.data.success) {
+    if (response?.data?.data?.proxy) {
       return response.data.data.proxy
     } else {
       throw new Error(response.data.message)
