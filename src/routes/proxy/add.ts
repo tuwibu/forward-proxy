@@ -3,16 +3,16 @@ import { Static, Type } from '@sinclair/typebox'
 import { random } from '../../utils'
 import cluster from '../../cluster'
 
-enum ProxyType {
-  tinsoftproxy = 'tinsoftproxy',
-  tmproxy = 'tmproxy',
-  proxyxoay = 'proxyxoay',
-  netproxy = 'netproxy',
-}
+// enum ProxyType {
+//   tinsoftproxy = 'tinsoftproxy',
+//   tmproxy = 'tmproxy',
+//   proxyxoay = 'proxyxoay',
+//   netproxy = 'netproxy',
+// }
 
 const BodySchema = Type.Object({
   apiKey: Type.String(),
-  type: Type.Enum(ProxyType),
+  type: Type.String(),
   destination: Type.Optional(Type.String()),
 })
 
