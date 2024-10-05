@@ -55,7 +55,9 @@ export const ResetProxy = async (prisma: PrismaClient<Prisma.PrismaClientOptions
             },
           })
         }
-      } catch (ex) {}
+      } catch (ex) {
+        logger.error(ex)
+      }
     }
   } catch (ex) {
     throw ex
