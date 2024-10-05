@@ -26,6 +26,7 @@ export const ChangeNetProxy = async (apiKey: string): Promise<string> => {
       },
     })
     if (response?.data?.data?.proxy) {
+      console.log('response.data.data.proxy', response.data.data.proxy)
       return response.data.data.proxy
     } else {
       throw new Error(response.data.message)
