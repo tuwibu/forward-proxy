@@ -36,9 +36,9 @@ export default async (fastify: FastifyInstance) => {
         if (checkApiKey) {
           throw new Error('API Key already exists')
         }
-        var port = random(10000, 60000)
+        var port = random(10000, 11000)
         while (true) {
-          port = random(10000, 60000)
+          port = random(10000, 11000)
           const checkPort = await fastify.prisma.proxy.findUnique({
             where: {
               port,
