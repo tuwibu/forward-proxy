@@ -10,6 +10,7 @@ export const ChangeTmProxy = async (apiKey: string): Promise<string> => {
       },
       data: JSON.stringify({
         api_key: apiKey,
+        id_location: 10,
       }),
     })
     if (response.data.code === 0) {
