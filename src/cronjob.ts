@@ -3,6 +3,7 @@ import { DefaultArgs } from '@prisma/client/runtime/library'
 import { ChangeProxyXoay } from './services/proxyxoay'
 import { ChangeTinsoftProxy } from './services/tinsoftproxy'
 import { ChangeTmProxy } from './services/tmproxy'
+import { ChangeKiotProxy } from './services/kiotproxy'
 import logger from './helpers/logger'
 import dotenv from 'dotenv'
 import { ChangeNetProxy } from './services/netproxy'
@@ -46,6 +47,17 @@ export const ResetProxy = async (prisma: PrismaClient<Prisma.PrismaClientOptions
           })
         } else if (proxy.type === 'netproxy') {
           const destination = await ChangeNetProxy(proxy.apiKey)
+          await prisma.proxy.update({
+            where: {
+              apiKey: proxy.apiKey,
+            },
+            data: {
+              destination,
+            },
+          })
+        }
+        else if (proxy.type === 'kiotproxy') {
+          const destination = await ChangeKiotProxy(proxy.apiKey)
           await prisma.proxy.update({
             where: {
               apiKey: proxy.apiKey,
