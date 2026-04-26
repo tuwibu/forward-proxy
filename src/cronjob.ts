@@ -11,14 +11,16 @@ dotenv.config()
 
 const RESET_PROXY_INTERVAL = process.env.RESET_PROXY_INTERVAL || 60000
 
-export const ResetProxy = async (prisma: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>) => {
+export const ResetProxy = async (prisma: PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>, force = false) => {
   try {
     const lists = await prisma.proxy.findMany({
-      where: {
-        updatedAt: {
-          lt: new Date(Date.now() - Number(RESET_PROXY_INTERVAL)),
-        },
-      },
+      where: force
+        ? {}
+        : {
+            updatedAt: {
+              lt: new Date(Date.now() - Number(RESET_PROXY_INTERVAL)),
+            },
+          },
     })
     for (const proxy of lists) {
       try {

@@ -44,7 +44,7 @@ app.listen(
       console.error(err)
       process.exit(1)
     }
-    await ResetProxy(app.prisma)
+    await ResetProxy(app.prisma, true)
     app.prisma.proxy.findMany({}).then((proxies) => {
       proxies.forEach((proxy) => {
         if (proxy.port) {
