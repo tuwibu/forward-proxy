@@ -1,0 +1,17 @@
+services:
+  forward-proxy:
+    build: .
+    container_name: forward-proxy
+    restart: unless-stopped
+    ports:
+      # API server
+      - "${PORT:-5000}:5000"
+      # Proxy ports (range used by proxy workers)
+      - "10000-10045:10000-10045"
+    env_file:
+      - .env
+    volumes:
+      - proxy-data:/app/prisma
+
+volumes:
+  proxy-data:

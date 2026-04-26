@@ -1,0 +1,7 @@
+node_modules
+dist
+.env
+*.sqlite3
+*.sqlite3-journal
+.git
+package-lock.json
